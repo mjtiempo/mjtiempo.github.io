@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    api_key : <input id="api_key" type="text"> <br>
+    api_code: <input id="api_code" type="text"> <br>
+    <button id="token">get auth token</button><br>
+    Auth Token: <span id="auth_token"></span><br>
+    <hr>
+    <p>
+        SVP List Videos: <span id="list_vid"></span>
+        <table id='svp_videos'>
+
+        </table>
+    </p>
+
+    <script>
+
+        async function getData(url) {
+            return await $.ajax(url); 
+        }
+
+        async function getToken(token_url){
+            let data = await getData(token_url);
+            return $(data).find("auth_token").text();
+        }
+
+        async function writeToken(token_url){
+            let token = await getToken(token_url);
+            var svp_token = "<a id='svp_auth_get_token' target='_blank' href='"+ token_url + "'>" + token + "</a>"
+            //clear auth token
+            $("#auth_token").empty();
+            $("#auth_token").append(svp_token);
+        };
+
+        async function svp_list_videos(token){
+            var svp_vids_url = "https://www.streamingvideoprovider.com/?l=api&a=svp_list_videos&token=" + token;
+            var svp_vids = "<a id='svp_auth_get_token' target='_blank' href='"+ svp_vids_url + "'>SVP Video List</a>";
+            $("#list_vid").empty();
+            $("#list_vid").append(svp_vids);
+
+            let data = await getData(svp_vids_url);
+
+            $("#svp_videos").empty();
+	    $("#svp_videos").append("<tr><th>Title</th><th>Video Type</th><th>Clip Id</th><th>ref no.</th></tr>");
+            $(data).find("video").each(function(index){
+                var title = $(this).find('title').text();
+                var ref_no = $(this).find('ref_no').text();
+                var clip_id = $(this).find('clip_key').text();
+                var vid_type = $(this).find('video_source').text();
+                var hls_url = "https://www.streamingvideoprovider.com/?l=api&a=svp_get_hls_url&token="+token +"&video_ref=" + ref_no;
+
+		$("#svp_videos").append(
+			"<tr><td>"+title+"</td>"+
+			"<td>"+vid_type+"</td>"+
+			"<td>"+clip_id+"</td>"+
+			"<td><a target='_blank' href='" + hls_url+"'>"+ ref_no +"</a></td></tr>"
+		);
+            });
+
+        }
+
+        $( "#token" ).click(function(){
+            
+            var api_key = $("#api_key").val(); 
+            var api_code = $("#api_code").val(); 
+            var url = "https://www.streamingvideoprovider.com/";
+            var token_url = url + "?l=api&a=svp_auth_get_token&api_key=" + api_key + "&api_code=" + api_code;
+
+            (async function(){
+                let token = await getToken(token_url);
+
+                await writeToken(token_url);
+                await svp_list_videos(token);
+
+              })();
+
+        });
+    </script>
+</body>
+</html>
