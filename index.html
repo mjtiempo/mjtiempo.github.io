@@ -1,20 +1,270 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Mark John Tiempo</title>
-  <!-- Bootstrap CSS via CDN -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mark Tiempo — Portfolio</title>
+  <meta name="description" content="Portfolio of Mark Tiempo — software developer building Linux desktop tools and web apps.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg-soft: #161b22;
+      --bg-card: #1c2129;
+      --border: #2d333b;
+      --text: #e6edf3;
+      --text-dim: #9da7b3;
+      --accent: #7ee787;
+      --accent-2: #79c0ff;
+      --grad: linear-gradient(135deg, #7ee787, #58a6ff);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- Nav ---------- */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
+    .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    nav ul { display: flex; gap: 28px; list-style: none; }
+    nav a { color: var(--text-dim); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color .15s; }
+    nav a:hover { color: var(--text); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 110px 0 80px; text-align: center; }
+    .hero .avatar {
+      width: 96px; height: 96px; margin: 0 auto 24px; border-radius: 50%;
+      background: var(--grad); padding: 3px;
+    }
+    .hero .avatar div {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="62" font-size="44" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">MT</text></svg>') center/cover;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    .hero h1 span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero .tagline { margin-top: 14px; color: var(--text-dim); font-size: 1.15rem; }
+    .hero .meta { margin-top: 8px; color: var(--text-dim); font-size: 0.95rem; font-family: 'JetBrains Mono', monospace; }
+    .hero .cta { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 24px; border-radius: 10px;
+      font-weight: 600; font-size: 0.95rem; text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--grad); color: #0d1117; box-shadow: 0 4px 20px rgba(88, 166, 255, 0.25); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--text); background: var(--bg-soft); }
+    .btn-ghost:hover { border-color: var(--text-dim); }
+
+    /* ---------- Sections ---------- */
+    section { padding: 64px 0; }
+    .section-title {
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title::before { content: ''; width: 4px; height: 22px; border-radius: 2px; background: var(--grad); }
+    .section-sub { color: var(--text-dim); margin-bottom: 36px; font-size: 0.98rem; }
+
+    /* ---------- About ---------- */
+    .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; }
+    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-card, .stack-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 14px; padding: 26px;
+    }
+    .about-card p { color: var(--text-dim); font-size: 0.98rem; }
+    .about-card p + p { margin-top: 12px; }
+    .about-card strong { color: var(--text); }
+    .stack-card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 0.8rem; font-weight: 500; padding: 5px 12px;
+      border-radius: 999px; background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ---------- Projects ---------- */
+    .project-card {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+      margin-bottom: 36px;
+      transition: border-color .2s, transform .2s;
+    }
+    .project-card:hover { border-color: #3d444d; transform: translateY(-3px); }
+    @media (max-width: 760px) { .project-card { grid-template-columns: 1fr; } }
+    .project-visual { min-height: 260px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; padding: 20px; border-right: 1px solid var(--border); }
+    @media (max-width: 760px) { .project-visual { border-right: none; border-bottom: 1px solid var(--border); } }
+    .project-visual img { max-width: 100%; max-height: 260px; border-radius: 10px; border: 1px solid var(--border); }
+    .project-body { padding: 28px; display: flex; flex-direction: column; }
+    .project-body .status {
+      display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+      font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;
+    }
+    .status-archived { background: rgba(210, 153, 34, 0.12); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
+    .status-active { background: rgba(126, 231, 135, 0.12); color: #7ee787; border: 1px solid rgba(126, 231, 135, 0.3); }
+    .project-body h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+    .project-body .stars { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+    .project-body .desc { color: var(--text-dim); font-size: 0.95rem; margin-top: 12px; flex-grow: 1; }
+    .project-body .desc ul { margin: 10px 0 0 18px; }
+    .project-body .desc li { margin-bottom: 4px; }
+    .project-body .desc li::marker { color: var(--accent); }
+    .project-links { margin-top: 20px; display: flex; gap: 10px; }
+
+    /* ---------- More / footer ---------- */
+    .more { text-align: center; margin-top: 8px; }
+    .more a { color: var(--accent-2); text-decoration: none; font-weight: 500; }
+    .more a:hover { text-decoration: underline; }
+
+    footer { border-top: 1px solid var(--border); padding: 36px 0 48px; margin-top: 40px; }
+    footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    footer p, footer a { color: var(--text-dim); font-size: 0.88rem; text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    .social { display: flex; gap: 18px; }
+    .social a { font-weight: 500; }
+  </style>
 </head>
-
 <body>
-    <h1>Hello, World!</h1>
 
-<!-- Bootstrap JS and JQuery via CDN -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  
+  <nav>
+    <div class="container">
+      <div class="logo">Mark<span>Tiempo</span></div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="avatar"><div></div></div>
+    <h1>Hi, I'm <span>Mark Tiempo</span></h1>
+    <p class="tagline">I build web apps and Linux desktop tools — from Jitsi-powered meeting managers to clipboard utilities for the Omarchy bar.</p>
+    <p class="meta">mjtiempo · github.com/mjtiempo</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#projects">View Projects</a>
+      <a class="btn btn-ghost" href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub Profile</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-sub">Developer, tinkerer, and homelab enthusiast.</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <p>I'm a software developer who likes building <strong>practical tools end-to-end</strong> — from Flask backends that generate JWT tokens for secure Jitsi meetings, to QML plugins that live inside the Omarchy desktop bar.</p>
+          <p>Most of my work lives in <strong>Python, JavaScript, and QML</strong>, and I enjoy the whole journey: designing the app, wiring the auth, and polishing the UI until it feels right.</p>
+        </div>
+        <div class="stack-card">
+          <h3>Toolbox</h3>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Flask</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">JWT / Jitsi</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">QML</span>
+            <span class="tag">Linux / Hyprland</span>
+            <span class="tag">Ansible</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">A selection of things I've built and published.</p>
+
+      <!-- markmeet -->
+      <article class="project-card">
+        <div class="project-visual">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%23161b22'/><rect x='12' y='12' width='396' height='40' rx='8' fill='%230d1117'/><circle cx='32' cy='32' r='7' fill='%23ff5f57'/><circle cx='52' cy='32' r='7' fill='%23febc2e'/><circle cx='72' cy='32' r='7' fill='%2328c840'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%237ee787' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='%234b5563'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='%231c2129'/><circle cx='46' cy='98' r='14' fill='none' stroke='%2358a6ff' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23e6edf3'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='%239da7b3'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%237ee787'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%230d1117' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='%231c2129'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23d29922' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23e6edf3'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='%239da7b3'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%237ee787'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%230d1117' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='%239da7b3'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
+        </div>
+        <div class="project-body">
+          <span class="status status-archived">Archived</span>
+          <h3>markmeet</h3>
+          <p class="stars">★ 18 · Python · Flask</p>
+          <div class="desc">
+            <p>A meeting manager for Jitsi Meet secured with token auth.</p>
+            <ul>
+              <li>User accounts with signup / login (Flask-Login)</li>
+              <li>Generates signed JWT tokens to lock down Jitsi rooms</li>
+              <li>Guests can join any room without an account</li>
+              <li>Custom profile avatars and QR-code sharing</li>
+            </ul>
+          </div>
+          <div class="project-links">
+            <a class="btn btn-ghost" href="https://github.com/mjtiempo/markmeet" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- clippy -->
+      <article class="project-card">
+        <div class="project-visual">
+          <img src="clippy-preview.png" alt="Clippy clipboard history panel screenshot">
+        </div>
+        <div class="project-body">
+          <span class="status status-active">Active</span>
+          <h3>Clippy</h3>
+          <p class="stars">Omarchy plugin · QML · MIT License</p>
+          <div class="desc">
+            <p>A clipboard history picker for the Omarchy bar. Click the icon in the bar and a popup shows your recent clipboard entries — text and images — then click one to copy it back.</p>
+            <ul>
+              <li>Pure viewer: no watchers or background processes</li>
+              <li>Reads Omarchy's built-in clipboard history</li>
+              <li>Images copy as images, ready to paste anywhere</li>
+              <li>Keyboard friendly: Esc closes, hover highlights</li>
+            </ul>
+          </div>
+          <div class="project-links">
+            <a class="btn btn-ghost" href="https://github.com/mjtiempo/omarchy-clippy" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <p class="more">Want to see more? Check out my <a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub profile</a> for other projects.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Mark Tiempo · Built with plain HTML &amp; CSS</p>
+      <div class="social">
+        <a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:markjohn.tiempo@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
