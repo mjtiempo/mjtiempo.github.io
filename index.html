@@ -10,20 +10,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-soft: #161b22;
-      --bg-card: #1c2129;
-      --border: #2d333b;
-      --text: #e6edf3;
-      --text-dim: #9da7b3;
-      --accent: #7ee787;
-      --accent-2: #79c0ff;
-      --grad: linear-gradient(135deg, #7ee787, #58a6ff);
+      --bg: #00008B;
+      --bg-soft: rgba(255, 255, 255, 0.05);
+      --bg-card: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.14);
+      --text: #FFFFFF;
+      --text-dim: rgba(255, 255, 255, 0.72);
+      --accent: #008B8B;
+      --accent-2: #0FA6A6;
+      --grad: linear-gradient(135deg, #008B8B, #FFFFFF);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
+    ::selection { background: #008B8B; color: #FFFFFF; }
 
     body {
       background: var(--bg);
@@ -38,7 +39,7 @@
     /* ---------- Nav ---------- */
     nav {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(13, 17, 23, 0.85);
+      background: rgba(0, 0, 139, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -57,7 +58,7 @@
     }
     .hero .avatar div {
       width: 100%; height: 100%; border-radius: 50%;
-      background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="62" font-size="44" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">MT</text></svg>') center/cover;
+      background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="62" font-size="44" fill="%23FFFFFF" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">MT</text></svg>') center/cover;
       display: flex; align-items: center; justify-content: center;
     }
     .hero h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
@@ -72,9 +73,9 @@
       transition: transform .15s, box-shadow .15s;
     }
     .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--grad); color: #0d1117; box-shadow: 0 4px 20px rgba(88, 166, 255, 0.25); }
+    .btn-primary { background: #FFFFFF; color: #00008B; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18); }
     .btn-ghost { border: 1px solid var(--border); color: var(--text); background: var(--bg-soft); }
-    .btn-ghost:hover { border-color: var(--text-dim); }
+    .btn-ghost:hover { border-color: var(--accent); }
 
     /* ---------- Sections ---------- */
     section { padding: 64px 0; }
@@ -111,7 +112,7 @@
       margin-bottom: 36px;
       transition: border-color .2s, transform .2s;
     }
-    .project-card:hover { border-color: #3d444d; transform: translateY(-3px); }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
     @media (max-width: 760px) { .project-card { grid-template-columns: 1fr; } }
     .project-visual { min-height: 260px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; padding: 20px; border-right: 1px solid var(--border); }
     @media (max-width: 760px) { .project-visual { border-right: none; border-bottom: 1px solid var(--border); } }
@@ -122,8 +123,8 @@
       font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
       padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;
     }
-    .status-archived { background: rgba(210, 153, 34, 0.12); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.3); }
-    .status-active { background: rgba(126, 231, 135, 0.12); color: #7ee787; border: 1px solid rgba(126, 231, 135, 0.3); }
+    .status-archived { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.75); border: 1px solid rgba(255, 255, 255, 0.22); }
+    .status-active { background: #008B8B; color: #FFFFFF; border: 1px solid #008B8B; }
     .project-body h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
     .project-body .stars { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
     .project-body .desc { color: var(--text-dim); font-size: 0.95rem; margin-top: 12px; flex-grow: 1; }
@@ -204,7 +205,7 @@
       <!-- markmeet -->
       <article class="project-card">
         <div class="project-visual">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%23161b22'/><rect x='12' y='12' width='396' height='40' rx='8' fill='%230d1117'/><circle cx='32' cy='32' r='7' fill='%23ff5f57'/><circle cx='52' cy='32' r='7' fill='%23febc2e'/><circle cx='72' cy='32' r='7' fill='%2328c840'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%237ee787' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='%234b5563'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='%231c2129'/><circle cx='46' cy='98' r='14' fill='none' stroke='%2358a6ff' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23e6edf3'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='%239da7b3'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%237ee787'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%230d1117' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='%231c2129'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23d29922' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23e6edf3'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='%239da7b3'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%237ee787'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%230d1117' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='%239da7b3'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%2300008B' stroke='rgba(255,255,255,0.18)'/><rect x='12' y='12' width='396' height='40' rx='8' fill='rgba(255,255,255,0.08)'/><circle cx='32' cy='32' r='7' fill='%23008B8B'/><circle cx='52' cy='32' r='7' fill='rgba(255,255,255,0.9)'/><circle cx='72' cy='32' r='7' fill='rgba(255,255,255,0.45)'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%23FFFFFF' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='rgba(255,255,255,0.55)'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='46' cy='98' r='14' fill='none' stroke='%23008B8B' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23FFFFFF'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.7)'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%23008B8B'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%23FFFFFF' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23008B8B' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23FFFFFF'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.7)'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%23008B8B'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%23FFFFFF' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='rgba(255,255,255,0.6)'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
         </div>
         <div class="project-body">
           <span class="status status-archived">Archived</span>
