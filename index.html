@@ -7,24 +7,28 @@
   <meta name="description" content="Portfolio of Mark Tiempo — software developer building Linux desktop tools and web apps.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* Design system: findyourbeacon.app — navy + gold, Playfair Display headings, Inter body */
     :root {
-      --bg: #00008B;
-      --bg-soft: rgba(255, 255, 255, 0.05);
-      --bg-card: rgba(255, 255, 255, 0.08);
-      --border: rgba(255, 255, 255, 0.14);
+      --bg: #0D1B2E;
+      --bg-soft: #152436;
+      --bg-card: #1E3250;
+      --border: rgba(255, 255, 255, 0.1);
       --text: #FFFFFF;
-      --text-dim: rgba(255, 255, 255, 0.72);
-      --accent: #008B8B;
-      --accent-2: #0FA6A6;
-      --grad: linear-gradient(135deg, #008B8B, #FFFFFF);
+      --text-dim: rgba(255, 255, 255, 0.62);
+      --text-faint: rgba(255, 255, 255, 0.45);
+      --gold: #b9a372;
+      --gold-lite: #d6c394;
+      --gold-soft: rgba(185, 163, 114, 0.14);
+      --grad: linear-gradient(135deg, #b9a372, #FFFFFF);
+      --mono: ui-monospace, "SF Mono", Menlo, monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html { scroll-behavior: smooth; }
-    ::selection { background: #008B8B; color: #FFFFFF; }
+    ::selection { background: var(--gold); color: var(--bg); }
 
     body {
       background: var(--bg);
@@ -39,51 +43,65 @@
     /* ---------- Nav ---------- */
     nav {
       position: sticky; top: 0; z-index: 50;
-      background: rgba(0, 0, 139, 0.85);
+      background: rgba(13, 27, 46, 0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
     nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
-    .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .logo { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
+    .logo span { color: var(--gold-lite); }
     nav ul { display: flex; gap: 28px; list-style: none; }
     nav a { color: var(--text-dim); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color .15s; }
     nav a:hover { color: var(--text); }
 
     /* ---------- Hero ---------- */
-    .hero { padding: 110px 0 80px; text-align: center; }
+    .hero { padding: 120px 0 84px; text-align: center; }
     .hero .avatar {
-      width: 96px; height: 96px; margin: 0 auto 24px; border-radius: 50%;
-      background: var(--grad); padding: 3px;
+      width: 104px; height: 104px; margin: 0 auto 30px; border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--gold), #FFFFFF);
     }
     .hero .avatar div {
       width: 100%; height: 100%; border-radius: 50%;
       background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="62" font-size="44" fill="%23FFFFFF" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">MT</text></svg>') center/cover;
       display: flex; align-items: center; justify-content: center;
     }
-    .hero h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
-    .hero h1 span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero .tagline { margin-top: 14px; color: var(--text-dim); font-size: 1.15rem; }
-    .hero .meta { margin-top: 8px; color: var(--text-dim); font-size: 0.95rem; font-family: 'JetBrains Mono', monospace; }
-    .hero .cta { margin-top: 32px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 3.6rem); font-weight: 400; letter-spacing: -0.01em;
+      line-height: 1.05;
+    }
+    .hero h1 em { font-style: italic; }
+    .hero h1 span {
+      font-style: normal;
+      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero .tagline { margin-top: 16px; color: var(--text-dim); font-size: 1.1rem; }
+    .hero .meta {
+      margin-top: 10px; color: var(--text-faint); font-size: 0.9rem;
+      font-family: var(--mono);
+    }
+    .hero .cta { margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 24px; border-radius: 10px;
+      padding: 11px 24px; border-radius: 8px;
       font-weight: 600; font-size: 0.95rem; text-decoration: none;
       transition: transform .15s, box-shadow .15s;
     }
     .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: #FFFFFF; color: #00008B; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.18); }
+    .btn-primary { background: #FFFFFF; color: var(--bg); box-shadow: 0 4px 20px rgba(185, 163, 114, 0.25); }
+    .btn-primary:hover { box-shadow: 0 6px 26px rgba(185, 163, 114, 0.4); }
     .btn-ghost { border: 1px solid var(--border); color: var(--text); background: var(--bg-soft); }
-    .btn-ghost:hover { border-color: var(--accent); }
+    .btn-ghost:hover { border-color: var(--gold); }
 
     /* ---------- Sections ---------- */
     section { padding: 64px 0; }
     .section-title {
-      font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 500; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px; letter-spacing: -0.01em;
     }
-    .section-title::before { content: ''; width: 4px; height: 22px; border-radius: 2px; background: var(--grad); }
+    .section-title::before { content: ''; width: 4px; height: 24px; border-radius: 2px; background: var(--gold); }
     .section-sub { color: var(--text-dim); margin-bottom: 36px; font-size: 0.98rem; }
 
     /* ---------- About ---------- */
@@ -91,18 +109,20 @@
     @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
     .about-card, .stack-card {
       background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 14px; padding: 26px;
+      border-radius: 14px; padding: 28px;
     }
     .about-card p { color: var(--text-dim); font-size: 0.98rem; }
     .about-card p + p { margin-top: 12px; }
     .about-card strong { color: var(--text); }
-    .stack-card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 14px; }
+    .stack-card h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-lite); margin-bottom: 16px; }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
-      font-size: 0.8rem; font-weight: 500; padding: 5px 12px;
+      font-size: 0.78rem; font-weight: 500; padding: 5px 12px;
       border-radius: 999px; background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
+      color: var(--text-dim); font-family: var(--mono);
+      transition: color .15s, border-color .15s;
     }
+    .tag:hover { color: var(--gold-lite); border-color: var(--gold); }
 
     /* ---------- Projects ---------- */
     .project-card {
@@ -112,7 +132,7 @@
       margin-bottom: 36px;
       transition: border-color .2s, transform .2s;
     }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .project-card:hover { border-color: rgba(185, 163, 114, 0.5); transform: translateY(-3px); }
     @media (max-width: 760px) { .project-card { grid-template-columns: 1fr; } }
     .project-visual { min-height: 260px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; padding: 20px; border-right: 1px solid var(--border); }
     @media (max-width: 760px) { .project-visual { border-right: none; border-bottom: 1px solid var(--border); } }
@@ -121,26 +141,28 @@
     .project-body .status {
       display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
       font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+      font-family: var(--mono);
       padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;
     }
-    .status-archived { background: rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.75); border: 1px solid rgba(255, 255, 255, 0.22); }
-    .status-active { background: #008B8B; color: #FFFFFF; border: 1px solid #008B8B; }
-    .project-body h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
-    .project-body .stars { color: var(--text-dim); font-size: 0.85rem; margin-top: 4px; }
+    .status-archived { background: rgba(255, 255, 255, 0.06); color: var(--text-faint); border: 1px solid var(--border); }
+    .status-active { background: var(--gold-soft); color: var(--gold-lite); border: 1px solid rgba(185, 163, 114, 0.4); }
+    .project-body h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.01em; }
+    .project-body .stars { color: var(--text-faint); font-size: 0.83rem; margin-top: 4px; font-family: var(--mono); }
     .project-body .desc { color: var(--text-dim); font-size: 0.95rem; margin-top: 12px; flex-grow: 1; }
     .project-body .desc ul { margin: 10px 0 0 18px; }
     .project-body .desc li { margin-bottom: 4px; }
-    .project-body .desc li::marker { color: var(--accent); }
+    .project-body .desc li::marker { color: var(--gold); }
     .project-links { margin-top: 20px; display: flex; gap: 10px; }
 
     /* ---------- More / footer ---------- */
-    .more { text-align: center; margin-top: 8px; }
-    .more a { color: var(--accent-2); text-decoration: none; font-weight: 500; }
+    .more { text-align: center; margin-top: 8px; color: var(--text-dim); }
+    .more a { color: var(--gold-lite); text-decoration: none; font-weight: 500; }
     .more a:hover { text-decoration: underline; }
 
-    footer { border-top: 1px solid var(--border); padding: 36px 0 48px; margin-top: 40px; }
+    footer { border-top: 1px solid var(--border); padding: 36px 0 48px; margin-top: 40px;
+      background: linear-gradient(180deg, transparent, rgba(21, 36, 54, 0.6)); }
     footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    footer p, footer a { color: var(--text-dim); font-size: 0.88rem; text-decoration: none; }
+    footer p, footer a { color: var(--text-faint); font-size: 0.88rem; text-decoration: none; }
     footer a:hover { color: var(--text); }
     .social { display: flex; gap: 18px; }
     .social a { font-weight: 500; }
@@ -161,7 +183,7 @@
 
   <header class="hero container">
     <div class="avatar"><div></div></div>
-    <h1>Hi, I'm <span>Mark Tiempo</span></h1>
+    <h1>Hi, I'm <em>Mark</em> <span>Tiempo</span></h1>
     <p class="tagline">I build web apps and Linux desktop tools — from Jitsi-powered meeting managers to clipboard utilities for the Omarchy bar.</p>
     <p class="meta">mjtiempo · github.com/mjtiempo</p>
     <div class="cta">
@@ -205,7 +227,7 @@
       <!-- markmeet -->
       <article class="project-card">
         <div class="project-visual">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%2300008B' stroke='rgba(255,255,255,0.18)'/><rect x='12' y='12' width='396' height='40' rx='8' fill='rgba(255,255,255,0.08)'/><circle cx='32' cy='32' r='7' fill='%23008B8B'/><circle cx='52' cy='32' r='7' fill='rgba(255,255,255,0.9)'/><circle cx='72' cy='32' r='7' fill='rgba(255,255,255,0.45)'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%23FFFFFF' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='rgba(255,255,255,0.55)'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='46' cy='98' r='14' fill='none' stroke='%23008B8B' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23FFFFFF'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.7)'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%23008B8B'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%23FFFFFF' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23008B8B' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23FFFFFF'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.7)'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%23008B8B'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%23FFFFFF' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='rgba(255,255,255,0.6)'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%230D1B2E' stroke='rgba(255,255,255,0.15)'/><rect x='12' y='12' width='396' height='40' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='32' cy='32' r='7' fill='%23b9a372'/><circle cx='52' cy='32' r='7' fill='rgba(255,255,255,0.85)'/><circle cx='72' cy='32' r='7' fill='rgba(255,255,255,0.4)'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%23FFFFFF' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='rgba(255,255,255,0.5)'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='rgba(255,255,255,0.05)'/><circle cx='46' cy='98' r='14' fill='none' stroke='%23b9a372' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23FFFFFF'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.6)'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%23b9a372'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%230D1B2E' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='rgba(255,255,255,0.05)'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23b9a372' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23FFFFFF'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.6)'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%23b9a372'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%230D1B2E' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='rgba(255,255,255,0.45)'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
         </div>
         <div class="project-body">
           <span class="status status-archived">Archived</span>
