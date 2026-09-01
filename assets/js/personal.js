@@ -426,9 +426,10 @@ function renderRepo(repo) {
 function renderRepos(repos) {
   const list = document.getElementById("reposList");
   list.replaceChildren();
-  const owned = repos.filter(r => !r.fork && !r.archived).sort((a, b) => b.stargazers_count - a.stargazers_count || b.pushed_at.localeCompare(a.pushed_at));
-  const forked = repos.filter(r => r.fork).sort((a, b) => b.pushed_at.localeCompare(a.pushed_at));
-  const show = owned.slice(0, 14).concat(forked.slice(0, 3));
+  // most recently updated first, recent at the top
+  const show = repos
+    .filter(r => !r.archived)
+    .sort((a, b) => b.pushed_at.localeCompare(a.pushed_at));
   if (!show.length) { list.appendChild(el("p", "repos-status", "No public repositories.")); return; }
   for (const repo of show) list.appendChild(renderRepo(repo));
 }
