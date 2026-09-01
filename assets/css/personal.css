@@ -1,0 +1,518 @@
+/* ── Tokens — Tokyo Night, the default Omarchy theme ──────────── */
+
+:root {
+  --background: #1a1b26;
+  --dark-background: #13141c;
+  --foreground: #a9b1d6;
+  --dark-foreground: #565f89;
+  --light-foreground: #b4bee6;
+  --bright-foreground: #c0caf5;
+  --accent: #7aa2f7;
+  --muted: #414868;
+  --green: #9ece6a;
+
+  --hover-fill: rgba(169, 177, 214, 0.08);
+  --active-fill: rgba(122, 162, 247, 0.18);
+  --scrim: rgba(26, 27, 38, 0.5);
+  --card-bg: rgba(26, 27, 38, 0.95);
+  --hairline: rgba(169, 177, 214, 0.12);
+  --border-soft: color-mix(in srgb, var(--foreground) 40%, transparent);
+  --dim: color-mix(in srgb, var(--foreground) 66%, #000);
+  --dim2: color-mix(in srgb, var(--foreground) 52%, #000);
+  --dim3: color-mix(in srgb, var(--foreground) 45%, #000);
+  --wallpaper: url("../images/backgrounds/tokyo-night.webp");
+
+  --bar-height: 44px;
+  --font: "JetBrains Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--foreground);
+  background-color: var(--background);
+  background-image: var(--wallpaper);
+  background-size: cover;
+  background-position: center;
+}
+
+button { font-family: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+a { color: var(--accent); }
+
+/* ── Top bar ──────────────────────────────────────────────────── */
+
+.top-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--bar-height);
+  padding: 0 10px;
+  background: var(--background);
+  border-bottom: 1px solid var(--hairline);
+  user-select: none;
+}
+
+.top-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.logo img {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: block;
+}
+
+.logo:hover { background: var(--hover-fill); }
+
+.handle {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+.top-bar__center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.bar-widget {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.bar-widget:hover { background: var(--hover-fill); }
+
+.bar-widget.clock { padding: 0 10px; }
+
+.bar-widget.weather svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  display: block;
+}
+
+.bar-widget.weather.hidden { display: none; }
+
+.top-bar__right {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.bar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+.bar-icon svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+.bar-icon:hover {
+  opacity: 1;
+  background: var(--hover-fill);
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .top-bar__right { display: none; }
+}
+
+/* ── Two tiled pages, side by side (Hyprland-style) ───────────── */
+
+.page-tiles {
+  position: fixed;
+  inset: calc(var(--bar-height) + 6px) 6px 6px 6px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+  gap: 6px;
+  z-index: 20;
+}
+
+@media (max-width: 860px) {
+  .page-tiles {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--background);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35);
+}
+
+.tile-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--background);
+  border-bottom: 1px solid var(--hairline);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.tile-title { font-weight: 700; letter-spacing: 1px; }
+
+.tile-link {
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.tile-link:hover { text-decoration: underline; }
+
+.tile-action {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.tile-action:hover { background: var(--hover-fill); color: var(--accent); }
+
+.tile-body {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding: 18px;
+}
+
+.tile-body::-webkit-scrollbar { display: none; }
+
+/* ── Profile tile ─────────────────────────────────────────────── */
+
+.profile-body { text-align: center; }
+
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid var(--border-soft);
+}
+
+.profile-name {
+  margin: 14px 0 2px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.profile-handle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.profile-bio {
+  margin: 12px auto 0;
+  max-width: 34em;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--light-foreground);
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--dim);
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 16px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--background);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn:hover { background: #7da6ff; }
+
+.btn.ghost {
+  background: none;
+  border: 1px solid var(--border-soft);
+  color: var(--foreground);
+}
+
+.btn.ghost:hover { background: var(--hover-fill); color: var(--accent); }
+
+/* ── Repositories tile ────────────────────────────────────────── */
+
+.repos-status {
+  margin: 0;
+  padding: 6px 2px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--dim);
+}
+
+.repo {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.repo:hover { background: var(--hover-fill); }
+
+.repo-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.repo-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--bright-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.repo:hover .repo-name { color: var(--accent); }
+
+.repo-updated {
+  flex: none;
+  font-size: 10px;
+  color: var(--dim2);
+}
+
+.repo-desc {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--dim);
+}
+
+.repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--dim2);
+}
+
+.repo-lang {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.repo-lang::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lang-color, var(--muted));
+}
+
+/* ── Weather panel (popup below the bar) ──────────────────────── */
+
+.panel {
+  position: fixed;
+  top: calc(var(--bar-height) + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  display: none;
+  flex-direction: column;
+  background: var(--background);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+  max-height: calc(100vh - var(--bar-height) - 18px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.panel::-webkit-scrollbar { display: none; }
+
+.panel.open { display: flex; }
+
+.wx-panel {
+  width: min(640px, calc(100vw - 24px));
+  padding: 16px 20px 14px;
+}
+
+.wx-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 6px;
+}
+
+.wx-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wx-hero-left svg {
+  width: 52px;
+  height: 52px;
+  fill: currentColor;
+}
+
+.wx-temp { display: flex; align-items: flex-start; }
+
+.wx-temp .num {
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.wx-temp .unit { font-size: 18px; margin-top: 6px; }
+
+.wx-right { text-align: right; }
+
+.wx-location {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.wx-stats {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.wx-stat-k {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  margin-bottom: 4px;
+}
+
+.wx-stat-v { font-size: 15px; }
+
+.wx-divider {
+  height: 1px;
+  background: var(--hairline);
+  margin: 14px 0 12px;
+}
+
+.wx-forecast {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.wx-day {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.wx-day svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.wx-day-name {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  margin-bottom: 3px;
+}
+
+.wx-day-temps {
+  display: flex;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.wx-day-temps .lo { color: var(--dim2); }
+
+.wx-status {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--dim);
+  padding: 4px 6px;
+}

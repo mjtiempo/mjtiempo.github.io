@@ -1,293 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mark Tiempo — Portfolio</title>
-  <meta name="description" content="Portfolio of Mark Tiempo — software developer building Linux desktop tools and web apps.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mark Tiempo</title>
+  <meta name="description" content="Mark John Tiempo — DevOps Engineer">
+
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200"><path fill="%239ece6a" d="m1200 1200h-480v-80h400v-1040h-479.996v160h-400v720h720v-720h-80v-80h159.996v880h-400v160h-640v-1200h1200zm-1120-80h480v-80h-400l.004-400h-80.004zm0-560h80.004v-400h400v-80h-480.004z"/></svg>'>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* Design system: findyourbeacon.app — navy + gold, Playfair Display headings, Inter body */
-    :root {
-      --bg: #0D1B2E;
-      --bg-soft: #152436;
-      --bg-card: #1E3250;
-      --border: rgba(255, 255, 255, 0.1);
-      --text: #FFFFFF;
-      --text-dim: rgba(255, 255, 255, 0.62);
-      --text-faint: rgba(255, 255, 255, 0.45);
-      --gold: #b9a372;
-      --gold-lite: #d6c394;
-      --gold-soft: rgba(185, 163, 114, 0.14);
-      --grad: linear-gradient(135deg, #b9a372, #FFFFFF);
-      --mono: ui-monospace, "SF Mono", Menlo, monospace;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-    ::selection { background: var(--gold); color: var(--bg); }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-
-    /* ---------- Nav ---------- */
-    nav {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(13, 27, 46, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; }
-    .logo { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.15rem; letter-spacing: -0.01em; }
-    .logo span { color: var(--gold-lite); }
-    nav ul { display: flex; gap: 28px; list-style: none; }
-    nav a { color: var(--text-dim); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color .15s; }
-    nav a:hover { color: var(--text); }
-
-    /* ---------- Hero ---------- */
-    .hero { padding: 120px 0 84px; text-align: center; }
-    .hero .avatar {
-      width: 104px; height: 104px; margin: 0 auto 30px; border-radius: 50%;
-      padding: 3px;
-      background: linear-gradient(135deg, var(--gold), #FFFFFF);
-    }
-    .hero .avatar div {
-      width: 100%; height: 100%; border-radius: 50%;
-      background: var(--bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="62" font-size="44" fill="%23FFFFFF" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700">MT</text></svg>') center/cover;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.6rem, 6vw, 3.6rem); font-weight: 400; letter-spacing: -0.01em;
-      line-height: 1.05;
-    }
-    .hero h1 em { font-style: italic; }
-    .hero h1 span {
-      font-style: normal;
-      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .hero .tagline { margin-top: 16px; color: var(--text-dim); font-size: 1.1rem; }
-    .hero .meta {
-      margin-top: 10px; color: var(--text-faint); font-size: 0.9rem;
-      font-family: var(--mono);
-    }
-    .hero .cta { margin-top: 36px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 24px; border-radius: 8px;
-      font-weight: 600; font-size: 0.95rem; text-decoration: none;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: #FFFFFF; color: var(--bg); box-shadow: 0 4px 20px rgba(185, 163, 114, 0.25); }
-    .btn-primary:hover { box-shadow: 0 6px 26px rgba(185, 163, 114, 0.4); }
-    .btn-ghost { border: 1px solid var(--border); color: var(--text); background: var(--bg-soft); }
-    .btn-ghost:hover { border-color: var(--gold); }
-
-    /* ---------- Sections ---------- */
-    section { padding: 64px 0; }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 500; margin-bottom: 10px;
-      display: flex; align-items: center; gap: 12px; letter-spacing: -0.01em;
-    }
-    .section-title::before { content: ''; width: 4px; height: 24px; border-radius: 2px; background: var(--gold); }
-    .section-sub { color: var(--text-dim); margin-bottom: 36px; font-size: 0.98rem; }
-
-    /* ---------- About ---------- */
-    .about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px; }
-    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
-    .about-card, .stack-card {
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 14px; padding: 28px;
-    }
-    .about-card p { color: var(--text-dim); font-size: 0.98rem; }
-    .about-card p + p { margin-top: 12px; }
-    .about-card strong { color: var(--text); }
-    .stack-card h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold-lite); margin-bottom: 16px; }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      font-size: 0.78rem; font-weight: 500; padding: 5px 12px;
-      border-radius: 999px; background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-dim); font-family: var(--mono);
-      transition: color .15s, border-color .15s;
-    }
-    .tag:hover { color: var(--gold-lite); border-color: var(--gold); }
-
-    /* ---------- Projects ---------- */
-    .project-card {
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      display: grid; grid-template-columns: 1fr 1fr;
-      margin-bottom: 36px;
-      transition: border-color .2s, transform .2s;
-    }
-    .project-card:hover { border-color: rgba(185, 163, 114, 0.5); transform: translateY(-3px); }
-    @media (max-width: 760px) { .project-card { grid-template-columns: 1fr; } }
-    .project-visual { min-height: 260px; background: var(--bg-card); display: flex; align-items: center; justify-content: center; padding: 20px; border-right: 1px solid var(--border); }
-    @media (max-width: 760px) { .project-visual { border-right: none; border-bottom: 1px solid var(--border); } }
-    .project-visual img { max-width: 100%; max-height: 260px; border-radius: 10px; border: 1px solid var(--border); }
-    .project-body { padding: 28px; display: flex; flex-direction: column; }
-    .project-body .status {
-      display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
-      font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
-      font-family: var(--mono);
-      padding: 4px 10px; border-radius: 999px; margin-bottom: 12px;
-    }
-    .status-archived { background: rgba(255, 255, 255, 0.06); color: var(--text-faint); border: 1px solid var(--border); }
-    .status-active { background: var(--gold-soft); color: var(--gold-lite); border: 1px solid rgba(185, 163, 114, 0.4); }
-    .project-body h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: -0.01em; }
-    .project-body .stars { color: var(--text-faint); font-size: 0.83rem; margin-top: 4px; font-family: var(--mono); }
-    .project-body .desc { color: var(--text-dim); font-size: 0.95rem; margin-top: 12px; flex-grow: 1; }
-    .project-body .desc ul { margin: 10px 0 0 18px; }
-    .project-body .desc li { margin-bottom: 4px; }
-    .project-body .desc li::marker { color: var(--gold); }
-    .project-links { margin-top: 20px; display: flex; gap: 10px; }
-
-    /* ---------- More / footer ---------- */
-    .more { text-align: center; margin-top: 8px; color: var(--text-dim); }
-    .more a { color: var(--gold-lite); text-decoration: none; font-weight: 500; }
-    .more a:hover { text-decoration: underline; }
-
-    footer { border-top: 1px solid var(--border); padding: 36px 0 48px; margin-top: 40px;
-      background: linear-gradient(180deg, transparent, rgba(21, 36, 54, 0.6)); }
-    footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    footer p, footer a { color: var(--text-faint); font-size: 0.88rem; text-decoration: none; }
-    footer a:hover { color: var(--text); }
-    .social { display: flex; gap: 18px; }
-    .social a { font-weight: 500; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/personal.css">
 </head>
+
 <body>
-
-  <nav>
-    <div class="container">
-      <div class="logo">Mark<span>Tiempo</span></div>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
+  <header class="top-bar">
+    <div class="top-bar__left">
+      <a class="logo" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+        <img src="https://github.com/mjtiempo.png" alt="" width="24" height="24">
+      </a>
+      <span class="handle">mjtiempo</span>
     </div>
-  </nav>
 
-  <header class="hero container">
-    <div class="avatar"><div></div></div>
-    <h1>Hi, I'm <em>Mark</em> <span>Tiempo</span></h1>
-    <p class="tagline">I build web apps and Linux desktop tools — from Jitsi-powered meeting managers to clipboard utilities for the Omarchy bar.</p>
-    <p class="meta">mjtiempo · github.com/mjtiempo</p>
-    <div class="cta">
-      <a class="btn btn-primary" href="#projects">View Projects</a>
-      <a class="btn btn-ghost" href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub Profile</a>
+    <div class="top-bar__center">
+      <button class="bar-widget clock" id="clockBtn" aria-label="Clock — right-click to cycle format" title="Right-click: format"></button>
+      <button class="bar-widget weather hidden" id="weatherBtn" aria-label="Weather" title="Weather · click: forecast · middle-click: refresh"></button>
+    </div>
+
+    <div class="top-bar__right">
+      <a class="bar-icon" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 32 32"><path d="m16 1.00195c-8.28427 0-15 6.71573-15 15 0 6.6274 4.2977 12.2471 10.2598 14.2314.75.1389 1.0254-.3252 1.0254-.7226 0-.3565-.0134-1.302-.0205-2.5557-4.17383.9072-5.05469-2.0117-5.05469-2.0117-.68262-1.7344-1.66602-2.1953-1.66602-2.1953-1.3613-.9306.1035-.9121.1035-.9121 1.5059.1055 2.29883 1.5469 2.29883 1.5469 1.336 2.291 3.5078 1.629 4.3613 1.2451.1367-.9697.5225-1.6318.9502-2.0068-3.3271-.3789-6.8252-1.6631-6.8252-7.4004 0-1.6348.584-2.9726 1.541-4.0205-.1543-.3799-.6689-1.9056.1465-3.9697 0 0 1.2578-.4023 4.1191 1.5361 1.1953-.332 2.4766-.4981 3.752-.504 1.2734.0059 2.5557.172 3.752.504 2.8613-1.9384 4.1152-1.5361 4.1152-1.5361.8184 2.0641.3047 3.5898.1484 3.9697.9609 1.048.5391 2.3857.5391 4.0205 0 3.7461-3.502 7.0166-8.3437 7.3828.5361.4609 1.0137 1.3721 1.0137 2.7676 0 1.9981-.0195 3.6064-.0195 4.0977 0 .4004.2715.8652 1.0351.7197 5.9545-1.9873 10.2481-7.6015 10.2481-14.2265 0-8.28427-6.7157-15-15-15z" fill="currentColor"/></svg>
+      </a>
+      <a class="bar-icon" href="mailto:markjohn.tiempo@gmail.com" title="Email" aria-label="Email">
+        <svg viewBox="0 0 32 32"><path d="m2 7c0-1.1.9-2 2-2h24c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2h-24c-1.1 0-2-.9-2-2zm3.2 1 10.8 8.4 10.8-8.4zm22.8 1.1-11.3 8.8c-.4.3-.9.3-1.3 0l-11.1-8.7v15.8h23.7z" fill="currentColor"/></svg>
+      </a>
     </div>
   </header>
 
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <p class="section-sub">Developer, tinkerer, and homelab enthusiast.</p>
-      <div class="about-grid">
-        <div class="about-card">
-          <p>I'm a software developer who likes building <strong>practical tools end-to-end</strong> — from Flask backends that generate JWT tokens for secure Jitsi meetings, to QML plugins that live inside the Omarchy desktop bar.</p>
-          <p>Most of my work lives in <strong>Python, JavaScript, and QML</strong>, and I enjoy the whole journey: designing the app, wiring the auth, and polishing the UI until it feels right.</p>
+  <main class="page-tiles">
+    <section class="tile tile-profile" aria-label="Profile">
+      <div class="tile-bar">
+        <span class="tile-title">Profile</span>
+        <a class="tile-link" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer">github.com/mjtiempo &#8599;</a>
+      </div>
+      <div class="tile-body profile-body" id="profileBody">
+        <img class="profile-avatar" src="https://github.com/mjtiempo.png" alt="mjtiempo" width="96" height="96">
+        <h1 class="profile-name">Mark John Tiempo</h1>
+        <p class="profile-handle">@mjtiempo</p>
+        <p class="profile-bio">DevOps Engineer &#8212; fulltime. Clanker operator sometime.</p>
+        <div class="profile-meta">
+          <span class="pin">&#9679; Philippines</span>
+          <span>&#9733; followers</span>
+          <span>&#9635; public repos</span>
         </div>
-        <div class="stack-card">
-          <h3>Toolbox</h3>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">Flask</span>
-            <span class="tag">SQLAlchemy</span>
-            <span class="tag">JWT / Jitsi</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">QML</span>
-            <span class="tag">Linux / Hyprland</span>
-            <span class="tag">Ansible</span>
-            <span class="tag">Git</span>
-          </div>
+        <div class="profile-actions">
+          <a class="btn" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="btn" href="mailto:markjohn.tiempo@gmail.com">Email</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tile tile-repos" aria-label="Repositories">
+      <div class="tile-bar">
+        <span class="tile-title">Repositories</span>
+        <button class="tile-action" id="reposRefresh" title="Refresh" aria-label="Refresh repositories">&#8635;</button>
+      </div>
+      <div class="tile-body repos-list" id="reposList">
+        <p class="repos-status">Loading repositories&#8230;</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="panel wx-panel" id="wxPanel" role="dialog" aria-label="Weather">
+    <div class="wx-hero">
+      <div class="wx-hero-left">
+        <span class="wx-hero-icon" id="wxHeroIcon"></span>
+        <div class="wx-temp"><span class="num" id="wxTemp">&#8212;</span><span class="unit" id="wxUnit"></span></div>
+      </div>
+      <div class="wx-right">
+        <span class="wx-location" id="wxLocation"></span>
+        <div class="wx-stats">
+          <div class="wx-stat"><div class="wx-stat-k">FEELS</div><div class="wx-stat-v" id="wxFeels">&#8212;</div></div>
+          <div class="wx-stat"><div class="wx-stat-k">WIND</div><div class="wx-stat-v" id="wxWind">&#8212;</div></div>
+          <div class="wx-stat"><div class="wx-stat-k">HUMID</div><div class="wx-stat-v" id="wxHumid">&#8212;</div></div>
         </div>
       </div>
     </div>
-  </section>
+    <div class="wx-divider" id="wxDivider"></div>
+    <div class="wx-forecast" id="wxForecast"></div>
+    <div class="wx-status" id="wxStatus"></div>
+  </div>
 
-  <section id="projects">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
-      <p class="section-sub">A selection of things I've built and published.</p>
-
-      <!-- markmeet -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='240' viewBox='0 0 420 240'><rect width='420' height='240' rx='10' fill='%230D1B2E' stroke='rgba(255,255,255,0.15)'/><rect x='12' y='12' width='396' height='40' rx='8' fill='rgba(255,255,255,0.06)'/><circle cx='32' cy='32' r='7' fill='%23b9a372'/><circle cx='52' cy='32' r='7' fill='rgba(255,255,255,0.85)'/><circle cx='72' cy='32' r='7' fill='rgba(255,255,255,0.4)'/><text x='110' y='38' font-family='monospace' font-size='15' fill='%23FFFFFF' font-weight='bold'>markmeet</text><text x='200' y='38' font-family='monospace' font-size='13' fill='rgba(255,255,255,0.5)'>/setup-meeting</text><rect x='24' y='70' width='372' height='56' rx='8' fill='rgba(255,255,255,0.05)'/><circle cx='46' cy='98' r='14' fill='none' stroke='%23b9a372' stroke-width='3'/><text x='72' y='95' font-family='monospace' font-size='13' fill='%23FFFFFF'>Team Standup</text><text x='72' y='112' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.6)'>room: standup-2026 · 5 attendees</text><rect x='300' y='84' width='80' height='28' rx='14' fill='%23b9a372'/><text x='340' y='103' font-family='monospace' font-size='12' fill='%230D1B2E' text-anchor='middle' font-weight='bold'>JOIN</text><rect x='24' y='138' width='372' height='56' rx='8' fill='rgba(255,255,255,0.05)'/><circle cx='46' cy='166' r='14' fill='none' stroke='%23b9a372' stroke-width='3'/><text x='72' y='163' font-family='monospace' font-size='13' fill='%23FFFFFF'>Design Review</text><text x='72' y='180' font-family='monospace' font-size='11' fill='rgba(255,255,255,0.6)'>room: design-review · 8 attendees</text><rect x='300' y='152' width='80' height='28' rx='14' fill='%23b9a372'/><text x='340' y='171' font-family='monospace' font-size='12' fill='%230D1B2E' text-anchor='middle' font-weight='bold'>JOIN</text><text x='24' y='218' font-family='monospace' font-size='12' fill='rgba(255,255,255,0.45)'>JWT secured via appid/appkey · guests can join without an account</text></svg>" alt="markmeet UI mockup">
-        </div>
-        <div class="project-body">
-          <span class="status status-archived">Archived</span>
-          <h3>markmeet</h3>
-          <p class="stars">★ 18 · Python · Flask</p>
-          <div class="desc">
-            <p>A meeting manager for Jitsi Meet secured with token auth.</p>
-            <ul>
-              <li>User accounts with signup / login (Flask-Login)</li>
-              <li>Generates signed JWT tokens to lock down Jitsi rooms</li>
-              <li>Guests can join any room without an account</li>
-              <li>Custom profile avatars and QR-code sharing</li>
-            </ul>
-          </div>
-          <div class="project-links">
-            <a class="btn btn-ghost" href="https://github.com/mjtiempo/markmeet" target="_blank" rel="noopener">View on GitHub</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- clippy -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="clippy-preview.png" alt="Clippy clipboard history panel screenshot">
-        </div>
-        <div class="project-body">
-          <span class="status status-active">Active</span>
-          <h3>Clippy</h3>
-          <p class="stars">Omarchy plugin · QML · MIT License</p>
-          <div class="desc">
-            <p>A clipboard history picker for the Omarchy bar. Click the icon in the bar and a popup shows your recent clipboard entries — text and images — then click one to copy it back.</p>
-            <ul>
-              <li>Pure viewer: no watchers or background processes</li>
-              <li>Reads Omarchy's built-in clipboard history</li>
-              <li>Images copy as images, ready to paste anywhere</li>
-              <li>Keyboard friendly: Esc closes, hover highlights</li>
-            </ul>
-          </div>
-          <div class="project-links">
-            <a class="btn btn-ghost" href="https://github.com/mjtiempo/omarchy-clippy" target="_blank" rel="noopener">View on GitHub</a>
-          </div>
-        </div>
-      </article>
-
-      <p class="more">Want to see more? Check out my <a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub profile</a> for other projects.</p>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>© <span id="year"></span> Mark Tiempo · Built with plain HTML &amp; CSS</p>
-      <div class="social">
-        <a href="https://github.com/mjtiempo" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:markjohn.tiempo@gmail.com">Email</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script src="assets/js/personal.js"></script>
 </body>
 </html>
