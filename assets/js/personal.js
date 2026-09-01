@@ -216,7 +216,7 @@ function renderWeather() {
   }
 }
 
-weatherBtn.addEventListener("click", () => wxPanel.classList.toggle("open"));
+weatherBtn.addEventListener("click", () => togglePanel(wxPanel));
 weatherBtn.addEventListener("auxclick", (event) => {
   if (event.button === 1) { event.preventDefault(); wxRetries = 0; wxFetch(); }
 });
@@ -226,8 +226,158 @@ weatherBtn.addEventListener("contextmenu", (event) => {
   wxFetch();
 });
 
+/* ── Panel manager ────────────────────────────────────────────── */
+
+const calPanel = document.getElementById("calPanel");
+
+function closePanels() {
+  calPanel.classList.remove("open");
+  wxPanel.classList.remove("open");
+}
+
+function togglePanel(panel) {
+  if (panel.classList.contains("open")) closePanels();
+  else { closePanels(); panel.classList.add("open"); }
+}
+
+/* ── Calendar (clock panel) ───────────────────────────────────── */
+
+const calHero = document.getElementById("calHero");
+const calHeroDate = document.getElementById("calHeroDate");
+const calYear = document.getElementById("calYear");
+const calYearFill = document.getElementById("calYearFill");
+const calYearPct = document.getElementById("calYearPct");
+const calGrid = document.getElementById("calGrid");
+const calMonthLabel = document.getElementById("calMonthLabel");
+
+function localeFirstDay() {
+  try {
+    const info = new Intl.Locale(navigator.language).weekInfo;
+    if (info && info.firstDay) return info.firstDay % 7;
+  } catch {}
+  return 0;
+}
+
+let weekStart = 0;
+try { weekStart = Number(localStorage.getItem("mj-week-start")); } catch {}
+if (Number.isNaN(weekStart) || weekStart < 0 || weekStart > 6) weekStart = localeFirstDay();
+
+let viewYear = new Date().getFullYear();
+let viewMonth = new Date().getMonth();
+
+function dateKey(y, m, d) { return y + "-" + pad2(m + 1) + "-" + pad2(d); }
+
+function monthGrid(year, month, start) {
+  const leading = (new Date(year, month, 1).getDay() - start + 7) % 7;
+  const cursor = new Date(year, month, 1 - leading);
+  const todayKey = todayISO();
+  const weeks = [];
+  for (let w = 0; w < 6; w++) {
+    const days = [];
+    let thursday = null;
+    for (let d = 0; d < 7; d++) {
+      if (cursor.getDay() === 4) thursday = { year: cursor.getFullYear(), month: cursor.getMonth(), day: cursor.getDate() };
+      days.push({ year: cursor.getFullYear(), month: cursor.getMonth(), day: cursor.getDate(), inMonth: cursor.getMonth() === month && cursor.getFullYear() === year, weekend: cursor.getDay() === 0 || cursor.getDay() === 6, today: dateKey(cursor.getFullYear(), cursor.getMonth(), cursor.getDate()) === todayKey });
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    const anchor = thursday || days[0];
+    weeks.push({ week: isoWeek(anchor.year, anchor.month, anchor.day), days });
+  }
+  return weeks;
+}
+
+function yearProgressPercent() {
+  const now = new Date();
+  const start = Date.UTC(now.getFullYear(), 0, 1);
+  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const daysInYear = Math.round((Date.UTC(now.getFullYear() + 1, 0, 1) - start) / 86400000);
+  return Math.max(0, Math.min(100, Math.round(((today - start) / 86400000 / daysInYear) * 100)));
+}
+
+function renderCal() {
+  const now = new Date();
+  const viewingCurrent = viewYear === now.getFullYear() && viewMonth === now.getMonth();
+
+  calHeroDate.textContent = MONTHS_FULL[now.getMonth()] + " " + now.getDate();
+  calHero.classList.toggle("clickable", !viewingCurrent);
+  calHero.title = viewingCurrent ? "" : "Back to today";
+
+  const pct = yearProgressPercent();
+  calYear.textContent = String(now.getFullYear());
+  calYearPct.textContent = pct + "%";
+  calYearFill.style.width = pct + "%";
+
+  const order = [];
+  for (let i = 0; i < 7; i++) order.push((weekStart + i) % 7);
+
+  calGrid.replaceChildren();
+  const headerRow = el("div", "cal-week-row");
+  const head = el("span", "cal-week-num w-head", "W");
+  head.title = "Start weeks on " + (weekStart === 1 ? "Sunday" : "Monday");
+  head.addEventListener("click", () => {
+    weekStart = weekStart === 1 ? 0 : 1;
+    try { localStorage.setItem("mj-week-start", String(weekStart)); } catch {}
+    renderCal();
+  });
+  headerRow.appendChild(head);
+  for (const d of order) headerRow.appendChild(el("span", "cal-day-hdr", DAYS_SHORT[d].toUpperCase()));
+  calGrid.appendChild(headerRow);
+
+  for (const week of monthGrid(viewYear, viewMonth, weekStart)) {
+    const row = el("div", "cal-week-row");
+    row.appendChild(el("span", "cal-week-num", String(week.week)));
+    for (const day of week.days) {
+      const cls = "cal-cell" + (day.today ? " today" : "") + (day.weekend ? " weekend" : "") + (day.inMonth ? "" : " out");
+      row.appendChild(el("span", cls, String(day.day)));
+    }
+    calGrid.appendChild(row);
+  }
+
+  calMonthLabel.textContent = (MONTHS_FULL[viewMonth] + " " + viewYear).toUpperCase();
+}
+
+function moveMonth(delta) {
+  const target = new Date(viewYear, viewMonth + delta, 1);
+  viewYear = target.getFullYear();
+  viewMonth = target.getMonth();
+  renderCal();
+}
+
+function goToToday() {
+  viewYear = new Date().getFullYear();
+  viewMonth = new Date().getMonth();
+  renderCal();
+}
+
+document.getElementById("calPrev").addEventListener("click", () => moveMonth(-1));
+document.getElementById("calNext").addEventListener("click", () => moveMonth(1));
+calHero.addEventListener("click", () => { if (!calHero.classList.contains("clickable")) return; goToToday(); });
+calPanel.addEventListener("wheel", (event) => {
+  if (event.deltaY === 0) return;
+  moveMonth(event.deltaY > 0 ? 1 : -1);
+}, { passive: true });
+
+clockBtn.addEventListener("click", () => togglePanel(calPanel));
+
+renderCal();
+
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") wxPanel.classList.remove("open");
+  if (event.key === "Escape") { closePanels(); return; }
+  if (!calPanel.classList.contains("open")) return;
+  if (event.key === "ArrowLeft") { event.preventDefault(); moveMonth(-1); }
+  else if (event.key === "ArrowRight") { event.preventDefault(); moveMonth(1); }
+  else if (event.key === "ArrowUp") { event.preventDefault(); moveMonth(-12); }
+  else if (event.key === "ArrowDown") { event.preventDefault(); moveMonth(12); }
+  else if (event.key === "[") { moveMonth(-1); }
+  else if (event.key === "]") { moveMonth(1); }
+  else if (event.key === "{") { moveMonth(-12); }
+  else if (event.key === "}") { moveMonth(12); }
+  else if (event.key === "t" || event.key === "T") { goToToday(); }
+  else if (event.key === "w" || event.key === "W") {
+    weekStart = weekStart === 1 ? 0 : 1;
+    try { localStorage.setItem("mj-week-start", String(weekStart)); } catch {}
+    renderCal();
+  }
 });
 
 /* ── GitHub: profile + repositories ───────────────────────────── */
@@ -327,3 +477,6 @@ fetchProfile();
 fetchRepos();
 wxFetch();
 setInterval(() => { wxRetries = 0; wxFetch(); }, 15 * 60 * 1000);
+
+if (location.hash === "#calendar") togglePanel(calPanel);
+else if (location.hash === "#weather") togglePanel(wxPanel);

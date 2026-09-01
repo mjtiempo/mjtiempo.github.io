@@ -24,16 +24,13 @@
     </div>
 
     <div class="top-bar__center">
-      <button class="bar-widget clock" id="clockBtn" aria-label="Clock — right-click to cycle format" title="Right-click: format"></button>
+      <button class="bar-widget clock" id="clockBtn" aria-label="Clock — click for calendar, right-click to cycle format" title="Click: calendar · Right-click: format"></button>
       <button class="bar-widget weather hidden" id="weatherBtn" aria-label="Weather" title="Weather · click: forecast · middle-click: refresh"></button>
     </div>
 
     <div class="top-bar__right">
       <a class="bar-icon" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
         <svg viewBox="0 0 32 32"><path d="m16 1.00195c-8.28427 0-15 6.71573-15 15 0 6.6274 4.2977 12.2471 10.2598 14.2314.75.1389 1.0254-.3252 1.0254-.7226 0-.3565-.0134-1.302-.0205-2.5557-4.17383.9072-5.05469-2.0117-5.05469-2.0117-.68262-1.7344-1.66602-2.1953-1.66602-2.1953-1.3613-.9306.1035-.9121.1035-.9121 1.5059.1055 2.29883 1.5469 2.29883 1.5469 1.336 2.291 3.5078 1.629 4.3613 1.2451.1367-.9697.5225-1.6318.9502-2.0068-3.3271-.3789-6.8252-1.6631-6.8252-7.4004 0-1.6348.584-2.9726 1.541-4.0205-.1543-.3799-.6689-1.9056.1465-3.9697 0 0 1.2578-.4023 4.1191 1.5361 1.1953-.332 2.4766-.4981 3.752-.504 1.2734.0059 2.5557.172 3.752.504 2.8613-1.9384 4.1152-1.5361 4.1152-1.5361.8184 2.0641.3047 3.5898.1484 3.9697.9609 1.048.5391 2.3857.5391 4.0205 0 3.7461-3.502 7.0166-8.3437 7.3828.5361.4609 1.0137 1.3721 1.0137 2.7676 0 1.9981-.0195 3.6064-.0195 4.0977 0 .4004.2715.8652 1.0351.7197 5.9545-1.9873 10.2481-7.6015 10.2481-14.2265 0-8.28427-6.7157-15-15-15z" fill="currentColor"/></svg>
-      </a>
-      <a class="bar-icon" href="mailto:markjohn.tiempo@gmail.com" title="Email" aria-label="Email">
-        <svg viewBox="0 0 32 32"><path d="m2 7c0-1.1.9-2 2-2h24c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2h-24c-1.1 0-2-.9-2-2zm3.2 1 10.8 8.4 10.8-8.4zm22.8 1.1-11.3 8.8c-.4.3-.9.3-1.3 0l-11.1-8.7v15.8h23.7z" fill="currentColor"/></svg>
       </a>
     </div>
   </header>
@@ -56,7 +53,6 @@
         </div>
         <div class="profile-actions">
           <a class="btn" href="https://github.com/mjtiempo" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a class="btn" href="mailto:markjohn.tiempo@gmail.com">Email</a>
         </div>
       </div>
     </section>
@@ -71,6 +67,24 @@
       </div>
     </section>
   </main>
+
+  <div class="panel cal-panel" id="calPanel" role="dialog" aria-label="Calendar">
+    <div class="cal-hero" id="calHero">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3h9A2.5 2.5 0 0 1 19 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18.5z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 9.5h14" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M8.7 3v3.4M15.3 3v3.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+      <span id="calHeroDate"></span>
+    </div>
+    <div class="cal-year-rail">
+      <span class="yr" id="calYear"></span>
+      <div class="cal-track"><div class="cal-track-fill" id="calYearFill"></div></div>
+      <span class="pct" id="calYearPct"></span>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="cal-nav">
+      <button class="cal-nav-btn" id="calPrev" aria-label="Previous month">&#8249;</button>
+      <span class="cal-nav-label" id="calMonthLabel"></span>
+      <button class="cal-nav-btn" id="calNext" aria-label="Next month">&#8250;</button>
+    </div>
+  </div>
 
   <div class="panel wx-panel" id="wxPanel" role="dialog" aria-label="Weather">
     <div class="wx-hero">
