@@ -6,6 +6,16 @@ The personal GitHub Pages site of **Mark John Tiempo** (`mjtiempo`) — a two-ti
 
 ---
 
+## [qylock-oma](https://github.com/mjtiempo/qylock-oma) — new
+
+An [Omarchy](https://omarchy.org) shell plugin that manages lock themes, SDDM themes, and wallpapers: a themed picker for lock and SDDM themes, a background switcher (bundled + system wallpapers), and experimental video backgrounds. Themes are fetched on demand from the [qylock](https://github.com/Darkkal44/qylock) collection (a fork of which is [mirrored here](https://github.com/mjtiempo/qylock)), listed via the lightweight [qylock-oma-catalog](https://github.com/mjtiempo/qylock-oma-catalog) catalog repo.
+
+![qylock-oma preview](assets/images/qylock-oma.png)
+
+## [qylock-oma-catalog](https://github.com/mjtiempo/qylock-oma-catalog) — new
+
+The theme catalog for **qylock-oma**: the theme list (`index.json`) + preview images that populate the plugin's theme grid. Heavy theme assets are not stored here — they're fetched from upstream on Apply/Preview.
+
 ## [omarchy-site](https://github.com/mjtiempo/omarchy-site) — new
 
 An interactive re-imagining of [omarchy.org](https://omarchy.org): the whole site is an Omarchy desktop. Top bar with logo, workspaces, clock/calendar, weather, and system icons; a launcher menu with search; 9 themed workspaces (each a built-in Omarchy theme + its default wallpaper); a tiled video wall on workspace 2; full-tile app pages (Manual, News, Teams, Patrons, Sponsorships, AIR, Meetups) on workspaces 3–9; and closable Security/Brand popups. Vanilla HTML/CSS/JS — no build step, GitHub Pages ready. This site's design language comes from it.
